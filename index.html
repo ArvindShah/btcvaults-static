@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" class="light"> <!-- Default to light mode -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multisignature Vault platform for the B2B market</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for body, affected by dark mode */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Light theme: White background */
+            color: #4d4d4d; /* Light theme: Dark gray text */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode styles for body */
+        html.dark body {
+            background-color: #262626; /* Dark theme: Dark gray background */
+            color: #ffffff; /* Dark theme: White text */
+        }
+
+        /* Hero section background image styling */
+        .hero-background-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            z-index: 1; /* Ensure content is above background */
+        }
+
+        /* Overlay for better text readability on hero image if needed */
+        .hero-background-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3); /* Slightly dark overlay */
+            z-index: -1; /* Place behind content */
+        }
+
+        /* Specific element styling for light and dark modes */
+        .bg-white-custom { /* Custom class to override default Tailwind .bg-white */
+            background-color: #ffffff; /* Light theme: White */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        html.dark .bg-white-custom {
+            background-color: #333333; /* Dark theme: Slightly lighter dark gray */
+            color: #ffffff;
+        }
+
+        .text-dark-gray { /* Custom text color for light mode */
+            color: #4d4d4d;
+            transition: color 0.3s ease;
+        }
+        html.dark .text-dark-gray {
+            color: #ffffff;
+        }
+
+        .bg-light-feature-card { /* Custom background for feature cards in light mode */
+            background-color: #f2f2f2; /* Very light gray */
+            transition: background-color 0.3s ease;
+        }
+        html.dark .bg-light-feature-card {
+            background-color: #3f3f3f; /* Darker background for feature cards */
+        }
+
+        .text-accent-orange {
+            color: #f7931a; /* Bitcoin Orange accent */
+            transition: color 0.3s ease;
+        }
+        html.dark .text-accent-orange {
+            color: #f7931a; /* Keep orange for contrast */
+        }
+
+        /* Footer background color */
+        .bg-footer-dark {
+            background-color: #4d4d4d; /* Dark gray */
+            transition: background-color 0.3s ease;
+        }
+        html.dark .bg-footer-dark {
+            background-color: #1a202c; /* Even darker for dark mode footer */
+        }
+
+        /* Modal specific styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            display: flex; /* Use flexbox for centering */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto; /* Center the modal box */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 101; /* Above the overlay */
+        }
+
+        html.dark .modal-content {
+            background-color: #333333; /* Dark mode modal background */
+            color: #ffffff;
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        html.dark .close-button:hover,
+        html.dark .close-button:focus {
+            color: #eee;
+        }
+    </style>
+    <script>
+        // Configure Tailwind CSS to use 'class' strategy for dark mode
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bitcoinOrange: '#f7931a',
+                        darkGrayText: '#4d4d4d',
+                        darkBg: '#262626',
+                        darkElement: '#333333',
+                        darkFeatureCard: '#3f3f3f',
+                        footerDark: '#4d4d4d',
+                        footerDarker: '#1a202c'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-white-custom shadow-sm py-2">
+        <nav class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo Images -->
+            <a href="#" class="flex items-center">
+                <img id="lightLogo" src="https://lh3.googleusercontent.com/d/1UlKdL3zZ-BdgBTJsKddsiHdUfFscgL4w" alt="Light Theme Logo" class="h-16 md:h-20 transition-opacity duration-300" onerror="this.onerror=null; this.src='https://placehold.co/120x40/f0f0f0/333333?text=Logo';">
+                <img id="darkLogo" src="https://lh3.googleusercontent.com/d/1m1FbCszCMeopMzCR8mSnNq2P3-EZg_pt" alt="Dark Theme Logo" class="h-16 md:h-20 hidden transition-opacity duration-300" onerror="this.onerror=null; this.src='https://placehold.co/120x40/333333/f0f0f0?text=Dark+Logo';">
+            </a>
+
+            <!-- Dark Mode Toggle (now aligned to the right) -->
+            <div class="flex items-center ml-auto">
+                <button id="themeToggle" class="p-2 rounded-full text-dark-gray dark:text-white transition-colors duration-300 focus:outline-none">
+                    <!-- Sun icon for light mode, Moon icon for dark mode -->
+                    <svg id="sunIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12H2m15.325-6.675l-.707-.707M6.675 17.325l-.707-.707M17.325 6.675l-.707.707M6.675 6.675l-.707.707M12 18a6 6 0 110-12 6 6 0 010 12z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button (remains, but might be less relevant without other nav items) -->
+            <div class="md:hidden">
+                <button class="text-dark-gray dark:text-white hover:text-accent-orange focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="text-white py-20 px-4 md:py-32 hero-background-image" style="background-image: url('https://lh3.googleusercontent.com/d/10E7vEUfizlGLSep4All3ZEnPo6i7B2X9');">
+        <div class="container mx-auto text-center relative z-20">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                Bitcoin Custody & Capital Infrastructure for Institutions
+            </h1>
+            <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90">
+                btcvaults is the operating engine behind Australia's Bitcoin treasury future — enabling secure multisig vaults, lending with overcollateralized Bitcoin, and ASX-listed access to 100% BTC on balance sheet.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button id="becomeAdvisorBtn" class="bg-white text-bitcoinOrange hover:bg-gray-100 font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105
+                               dark:bg-darkElement dark:text-white dark:hover:bg-darkFeatureCard">
+                    Become Advisor
+                </button>
+                <a href="https://app.btcvaults.com" target="_blank" class="flex items-center justify-center bg-transparent border-2 border-white text-white hover:bg-white hover:text-bitcoinOrange font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105
+                               dark:hover:text-white dark:hover:bg-darkFeatureCard dark:border-white">
+                    Launch App
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 px-4 md:py-24 bg-white-custom">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-dark-gray dark:text-white">Collaborative Custody platform for B2B market</h2>
+            <p class="text-lg text-center mb-12 max-w-4xl mx-auto text-dark-gray dark:text-gray-300">
+                We empower Bitcoin Advisors to offer secure, collaborative solutions for managing client assets. With multiple keys required to authorize transactions, our platform minimizes theft risk and ensures compliance. Enhance trust, security, and client relationships with our easy-to-use, secure system. Join us in setting a new standard for Bitcoin custody.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1: Vaults Platform™ -->
+                <div class="bg-light-feature-card p-6 rounded-lg shadow-md text-center dark:bg-darkFeatureCard dark:shadow-xl transition duration-300">
+                    <div class="mb-4 text-accent-orange">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.01 12.01 0 002.92 11.764c.367 2.186 1.344 4.197 2.822 5.684a12.007 12.007 0 007.25 3.551c2.812-.008 5.422-1.127 7.25-3.551a12.007 12.007 0 002.822-5.684 12.01 12.01 0 00-.083-4.996z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-dark-gray dark:text-white">Vaults Platform™</h3>
+                    <p class="text-dark-gray opacity-80 dark:text-gray-300">Bitcoin custody infrastructure for professionals. A B2B multisig platform that enables Bitcoin Advisors to create and manage collaborative custody vaults for clients including SMSFs, family offices, and companies — while retaining client key majority.</p>
+                </div>
+
+                <!-- Feature 2: Lending Vaults™ -->
+                <div class="bg-light-feature-card p-6 rounded-lg shadow-md text-center dark:bg-darkFeatureCard dark:shadow-xl transition duration-300">
+                    <div class="mb-4 text-accent-orange">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8L11 2m7 12v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h3m7 3h3a2 2 0 012 2v2m-7 5v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h3"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-dark-gray dark:text-white">Lending Vaults™</h3>
+                    <p class="text-dark-gray opacity-80 dark:text-gray-300">Secure, overcollateralized Bitcoin lending. Non-custodial 3-of-4 multisig vault structure enabling Bitcoin-backed loans with built-in arbitration, neutral keyholders, and risk controls — designed for compliant, transparent borrowing.</p>
+                </div>
+
+                <!-- Feature 3: Bitcoin Treasury Engine™ -->
+                <div class="bg-light-feature-card p-6 rounded-lg shadow-md text-center dark:bg-darkFeatureCard dark:shadow-xl transition duration-300">
+                    <div class="mb-4 text-accent-orange">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2M13 7h5a2 2 0 012 2v6a2 2 0 01-2 2h-5m-9 0h1a2 2 0 002-2v-3a2 2 0 00-2-2H4a2 2 0 00-2 2v3a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-dark-gray dark:text-white">Bitcoin Treasury Engine™</h3>
+                    <p class="text-dark-gray opacity-80 dark:text-gray-300">Public company treasury strategy powered by Bitcoin. An ASX-listed entity that accumulates Bitcoin on balance sheet while generating platform revenue — delivering long-term BTC-per-share growth for shareholders and setting a benchmark for sovereign corporate treasuries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-footer-dark text-gray-300 py-10 px-4">
+        <div class="container mx-auto text-center md:flex md:justify-between md:items-center">
+            <p class="mb-4 md:mb-0">&copy; 2025 btcvaults. All rights reserved.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+                <a href="#" class="hover:text-white">Terms of Service</a>
+                <a href="#" class="hover:text-white">FAQ</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Advisor Contact Modal -->
+    <div id="advisorModal" class="modal">
+        <div class="modal-content bg-white-custom text-dark-gray dark:text-white">
+            <span class="close-button" id="closeModalBtn">&times;</span>
+            <h3 class="text-2xl font-bold mb-6 text-center text-dark-gray dark:text-white">Become an Advisor</h3>
+            <form id="advisorForm" class="space-y-4">
+                <div>
+                    <label for="advisorName" class="block text-sm font-medium mb-1">Your Name</label>
+                    <input type="text" id="advisorName" name="advisorName" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bitcoinOrange dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+                </div>
+                <div>
+                    <label for="advisorEmail" class="block text-sm font-medium mb-1">Email Address</label>
+                    <input type="email" id="advisorEmail" name="advisorEmail" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bitcoinOrange dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+                </div>
+                <div>
+                    <label for="advisorCompany" class="block text-sm font-medium mb-1">Company (Optional)</label>
+                    <input type="text" id="advisorCompany" name="advisorCompany" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bitcoinOrange dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+                <div>
+                    <label for="advisorMessage" class="block text-sm font-medium mb-1">Message</label>
+                    <textarea id="advisorMessage" name="advisorMessage" rows="4" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bitcoinOrange dark:bg-gray-700 dark:border-gray-600 dark:text-white" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-bitcoinOrange hover:bg-opacity-80 text-white font-bold py-2 px-4 rounded-md transition duration-300 shadow-md">
+                    Submit Application
+                </button>
+            </form>
+            <p id="formMessage" class="mt-4 text-center text-sm hidden"></p>
+        </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const lightLogo = document.getElementById('lightLogo');
+        const darkLogo = document.getElementById('darkLogo');
+
+        // Modal elements
+        const becomeAdvisorBtn = document.getElementById('becomeAdvisorBtn');
+        const advisorModal = document.getElementById('advisorModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const advisorForm = document.getElementById('advisorForm');
+        const formMessage = document.getElementById('formMessage');
+
+
+        // Function to update logo visibility
+        function updateLogoVisibility(isDark) {
+            if (isDark) {
+                lightLogo.classList.add('hidden');
+                darkLogo.classList.remove('hidden');
+            } else {
+                lightLogo.classList.remove('hidden');
+                darkLogo.classList.add('hidden');
+            }
+        }
+
+        // Check for saved theme preference on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+            updateLogoVisibility(true);
+        } else {
+            htmlElement.classList.remove('dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+            updateLogoVisibility(false);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                updateLogoVisibility(false);
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                updateLogoVisibility(true);
+            }
+        });
+
+        // Event listeners for the modal
+        if (becomeAdvisorBtn) {
+            becomeAdvisorBtn.addEventListener('click', () => {
+                advisorModal.style.display = 'flex'; // Show the modal
+                formMessage.classList.add('hidden'); // Hide any previous messages
+            });
+        }
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                advisorModal.style.display = 'none'; // Hide the modal
+            });
+        }
+
+        // Close modal when clicking outside the content
+        if (advisorModal) {
+            advisorModal.addEventListener('click', (event) => {
+                if (event.target === advisorModal) {
+                    advisorModal.style.display = 'none';
+                }
+            });
+        }
+
+        // Form submission handler
+        if (advisorForm) {
+            advisorForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                const name = document.getElementById('advisorName').value;
+                const email = document.getElementById('advisorEmail').value;
+                const company = document.getElementById('advisorCompany').value;
+                const message = document.getElementById('advisorMessage').value;
+
+                // For demonstration, log the form data to console
+                console.log('Advisor Application Submitted:', { name, email, company, message });
+
+                // Display a success message
+                formMessage.textContent = 'Thank you for your application! We will get back to you shortly.';
+                formMessage.classList.remove('hidden');
+                formMessage.classList.add('text-green-600'); // Optional: style success message
+
+                // You would typically send this data to a backend server here
+                // e.g., using fetch() or XMLHttpRequest
+
+                // Clear the form (optional)
+                advisorForm.reset();
+            });
+        }
+    </script>
+</body>
+</html>
