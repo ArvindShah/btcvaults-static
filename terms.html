@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - btcvaults</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #4d4d4d;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        html.dark body {
+            background-color: #262626;
+            color: #ffffff;
+        }
+        .hero-background-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-background-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+        .bg-white-custom {
+            background-color: #ffffff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        html.dark .bg-white-custom {
+            background-color: #333333;
+            color: #ffffff;
+        }
+        .text-dark-gray {
+            color: #4d4d4d;
+            transition: color 0.3s ease;
+        }
+        html.dark .text-dark-gray {
+            color: #ffffff;
+        }
+        .bg-light-feature-card {
+            background-color: #f2f2f2;
+            transition: background-color 0.3s ease;
+        }
+        html.dark .bg-light-feature-card {
+            background-color: #3f3f3f;
+        }
+        .text-accent-orange {
+            color: #f7931a;
+            transition: color 0.3s ease;
+        }
+        html.dark .text-accent-orange {
+            color: #f7931a;
+        }
+        .bg-footer-dark {
+            background-color: #4d4d4d;
+            transition: background-color 0.3s ease;
+        }
+        html.dark .bg-footer-dark {
+            background-color: #1a202c;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bitcoinOrange: '#f7931a',
+                        darkGrayText: '#4d4d4d',
+                        darkBg: '#262626',
+                        darkElement: '#333333',
+                        darkFeatureCard: '#3f3f3f',
+                        footerDark: '#4d4d4d',
+                        footerDarker: '#1a202c'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-white-custom shadow-sm py-2">
+        <nav class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo Images -->
+            <a href="index.html" class="flex items-center">
+                <img id="lightLogo" src="https://lh3.googleusercontent.com/d/1UlKdL3zZ-BdgBTJsKddsiHdUfFscgL4w" alt="Light Theme Logo" class="h-16 md:h-20 transition-opacity duration-300" onerror="this.onerror=null; this.src='https://placehold.co/120x40/f0f0f0/333333?text=Logo';">
+                <img id="darkLogo" src="https://lh3.googleusercontent.com/d/1m1FbCszCMeopMzCR8mSnNq2P3-EZg_pt" alt="Dark Theme Logo" class="h-16 md:h-20 hidden transition-opacity duration-300" onerror="this.onerror=null; this.src='https://placehold.co/120x40/333333/f0f0f0?text=Dark+Logo';">
+            </a>
+
+            <!-- Back Home Link & Dark Mode Toggle -->
+            <div class="flex items-center ml-auto space-x-4">
+                <a href="index.html" class="text-dark-gray dark:text-white hover:text-accent-orange font-medium transition duration-300">Back Home</a>
+                <button id="themeToggle" class="p-2 rounded-full text-dark-gray dark:text-white transition-colors duration-300 focus:outline-none">
+                    <svg id="sunIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12H2m15.325-6.675l-.707-.707M6.675 17.325l-.707-.707M17.325 6.675l-.707.707M6.675 6.675l-.707.707M12 18a6 6 0 110-12 6 6 0 010 12z"></path>
+                    </svg>
+                    <svg id="moonIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button (removed as no other nav items) -->
+        </nav>
+    </header>
+
+    <!-- Main Content for Terms of Service -->
+    <main class="container mx-auto px-4 py-16 md:py-24 bg-white-custom min-h-screen">
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-8 text-dark-gray dark:text-white">Terms of Service</h1>
+        <div class="prose max-w-none text-dark-gray dark:text-gray-300">
+            <p><strong>Last Updated: June 23, 2025</strong></p>
+            <p>Welcome to btcvaults. By accessing or using our website and services, you agree to comply with and be bound by the following Terms of Service. Please review them carefully.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Acceptance of Terms</h2>
+            <p>By using our services, you signify your acceptance of these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Changes to Terms</h2>
+            <p>We reserve the right to modify these Terms at any time. All changes are effective immediately when we post them. Your continued use of the website following the posting of revised Terms means that you accept and agree to the changes.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Use of Website</h2>
+            <p>The content and services provided on this website are for informational purposes only. You agree to use the website only for lawful purposes and in accordance with these Terms.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Intellectual Property</h2>
+            <p>All content on this website, including text, graphics, logos, and images, is the property of btcvaults or its content suppliers and is protected by intellectual property laws.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Disclaimer of Warranties</h2>
+            <p>The website and its content are provided on an "as is" and "as available" basis, without any warranties of any kind, either express or implied.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Limitation of Liability</h2>
+            <p>In no event will btcvaults, its affiliates, or their licensors, service providers, employees, agents, officers, or directors be liable for damages of any kind, arising out of or in connection with your use, or inability to use, our website or services.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Governing Law</h2>
+            <p>These Terms shall be governed by and construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of law principles.</p>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4 text-dark-gray dark:text-white">Contact Information</h2>
+            <p>If you have any questions about these Terms of Service, please contact us at <a href="mailto:hello@btcvaults.com" class="text-accent-orange hover:underline">hello@btcvaults.com</a>.</p>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-footer-dark text-gray-300 py-10 px-4">
+        <div class="container mx-auto text-center md:flex md:justify-between md:items-center">
+            <p class="mb-4 md:mb-0">&copy; 2025 btcvaults. All rights reserved.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white">Terms of Service</a>
+                <a href="faq.html" class="hover:text-white">FAQ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const lightLogo = document.getElementById('lightLogo');
+        const darkLogo = document.getElementById('darkLogo');
+
+        function updateLogoVisibility(isDark) {
+            if (isDark) {
+                lightLogo.classList.add('hidden');
+                darkLogo.classList.remove('hidden');
+            } else {
+                lightLogo.classList.remove('hidden');
+                darkLogo.classList.add('hidden');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+            updateLogoVisibility(true);
+        } else {
+            htmlElement.classList.remove('dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+            updateLogoVisibility(false);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                updateLogoVisibility(false);
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                updateLogoVisibility(true);
+            }
+        });
+    </script>
+</body>
+</html>
