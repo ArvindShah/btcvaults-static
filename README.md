@@ -1,0 +1,1 @@
+# btcvaults-static
