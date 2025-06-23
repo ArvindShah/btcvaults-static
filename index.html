@@ -86,6 +86,60 @@
         html.dark .bg-footer-dark {
             background-color: #1a202c; /* Even darker for dark mode footer */
         }
+
+        /* Modal specific styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            display: flex; /* Use flexbox for centering */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto; /* Center the modal box */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 101; /* Above the overlay */
+        }
+
+        html.dark .modal-content {
+            background-color: #333333; /* Dark mode modal background */
+            color: #ffffff;
+        }
+
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        html.dark .close-button:hover,
+        html.dark .close-button:focus {
+            color: #eee;
+        }
     </style>
     <script>
         // Configure Tailwind CSS to use 'class' strategy for dark mode
@@ -154,10 +208,10 @@
                                dark:bg-darkElement dark:text-white dark:hover:bg-darkFeatureCard" target="_blank">
                     Become Advisor
                 </a>
-                <a href="https://app.btcvaults.com" target="_blank" class="flex items-center justify-center bg-transparent border-2 border-white text-white hover:bg-white hover:text-bitcoinOrange font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105
+                <button id="launchAppBtn" class="flex items-center justify-center bg-transparent border-2 border-white text-white hover:bg-white hover:text-bitcoinOrange font-bold py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105
                                dark:hover:text-white dark:hover:bg-darkFeatureCard dark:border-white">
                     Launch App
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -213,6 +267,16 @@
         </div>
     </footer>
 
+    <!-- Launch App Modal -->
+    <div id="launchModal" class="modal">
+        <div class="modal-content bg-white-custom text-dark-gray dark:text-white">
+            <span class="close-button" id="closeLaunchModalBtn">&times;</span>
+            <h3 class="text-2xl font-bold mb-4 text-center text-dark-gray dark:text-white">Coming Soon!</h3>
+            <p class="text-center text-lg mb-4">Hold your horses, we are launching in Q3 2025!</p>
+            <p class="text-center text-lg">Perhaps send us an email to <a href="mailto:hello@btcvaults.com" class="text-bitcoinOrange hover:underline" target="_blank">hello@btcvaults.com</a> if you would like to become a Bitcoin Advisor.</p>
+        </div>
+    </div>
+
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const htmlElement = document.documentElement;
@@ -220,6 +284,11 @@
         const moonIcon = document.getElementById('moonIcon');
         const lightLogo = document.getElementById('lightLogo');
         const darkLogo = document.getElementById('darkLogo');
+
+        // Modal elements
+        const launchAppBtn = document.getElementById('launchAppBtn');
+        const launchModal = document.getElementById('launchModal');
+        const closeLaunchModalBtn = document.getElementById('closeLaunchModalBtn');
 
         // Function to update logo visibility
         function updateLogoVisibility(isDark) {
@@ -261,6 +330,28 @@
                 updateLogoVisibility(true);
             }
         });
+
+        // Event listeners for the Launch App modal
+        if (launchAppBtn) {
+            launchAppBtn.addEventListener('click', () => {
+                launchModal.style.display = 'flex'; // Show the modal
+            });
+        }
+
+        if (closeLaunchModalBtn) {
+            closeLaunchModalBtn.addEventListener('click', () => {
+                launchModal.style.display = 'none'; // Hide the modal
+            });
+        }
+
+        // Close modal when clicking outside the content
+        if (launchModal) {
+            launchModal.addEventListener('click', (event) => {
+                if (event.target === launchModal) {
+                    launchModal.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>
