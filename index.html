@@ -372,7 +372,7 @@
                 };
                 try {
                     // Replace with your deployed Azure Function endpoint URL
-                    const response = await fetch('https://YOUR_AZURE_FUNCTION_URL_HERE/api/advisorInquire', {
+                    const response = await fetch('https://btcvaultfunctionapp.azurewebsites.net/api/advisorinquire', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(data)
